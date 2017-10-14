@@ -20,51 +20,51 @@ BASE = len(str(NUMBER_OF_FILES))
 SKIP = False
 
 if NUMBER_OF_FILES == 0:
-    print("Error: no files provided", file=sys.stderr)
-    sys.exit(1)
+	print("Error: no files provided", file=sys.stderr)
+	sys.exit(1)
 
 def find_extension(filename):
-    global SKIP
-    i = 1
-    if filename[0] == '.':
-        SKIP = True
-        return "dotfile"
-    elif os.path.isdir(filename):
-        SKIP = True
-        return "directory"
-    while True:
-        if i >= len(filename):
-            return ""
-        elif filename[-i] == '.':
-            # all characters up to '.'
-            return filename[-i:]
-        else:
-            i = i + 1
+	global SKIP
+	i = 1
+	if filename[0] == '.':
+		SKIP = True
+		return "dotfile"
+	elif os.path.isdir(filename):
+		SKIP = True
+		return "directory"
+	while True:
+		if i >= len(filename):
+			return ""
+		elif filename[-i] == '.':
+			# all characters up to '.'
+			return filename[-i:]
+		else:
+			i = i + 1
 
 def zero(position):
-    global BASE
-    volatile_base = len(position)
-    if BASE < 3:        # if BASE is less than 100, use stylistic zeros before the file number i.e: '001.png'
-        if volatile_base > 1:
-            return 1
-        else:
-            return 2
-    else:
-        return BASE - volitile_base
+	global BASE
+	volatile_base = len(position)
+	if BASE < 3:        # if BASE is less than 100, use stylistic zeros before the file number i.e: '001.png'
+		if volatile_base > 1:
+			return 1
+		else:
+			return 2
+	else:
+		return BASE - volitile_base
 
 # Main loop
 for main in range(0, NUMBER_OF_FILES):
-    global SKIP
-    current = FILES[main]
-    ext = find_extension(current)
-    position = str(main + 1)    # main + 1 because no need for files named 0000
-    zeros = zero(position)
+	global SKIP
+	current = FILES[main]
+	ext = find_extension(current)
+	position = str(main + 1)    # main + 1 because no need for files named 0000
+	zeros = zero(position)
 
-    filename = (("0" * zeros) + position + ext)
+	filename = (("0" * zeros) + position + ext)
 
-    if SKIP == False:
-        print("Moving " + current + " to " + filename)
-        os.rename(current, filename)
-    else:
-        print("Skiping " + current + " - " + ext, file=sys.stderr)
-        SKIP = False
+	if SKIP == False:
+		print("Moving " + current + " to " + filename)
+		os.rename(current, filename)
+	else:
+		print("Skiping " + current + " - " + ext, file=sys.stderr)
+		SKIP = False
