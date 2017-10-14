@@ -14,6 +14,11 @@ TODO:
 import os
 import sys
 
+global FILES
+global NUMBER_OF_FILES
+global BASE
+global SKIP
+
 FILES = os.listdir(os.getenv("PWD"))
 NUMBER_OF_FILES = len(FILES)
 BASE = len(str(NUMBER_OF_FILES))
@@ -24,7 +29,7 @@ if NUMBER_OF_FILES == 0:
 	sys.exit(1)
 
 def find_extension(filename):
-	global SKIP
+	#global SKIP
 	i = 1
 	if filename[0] == '.':
 		SKIP = True
@@ -42,7 +47,7 @@ def find_extension(filename):
 			i = i + 1
 
 def zero(position):
-	global BASE
+	#global BASE
 	volatile_base = len(position)
 	if BASE < 3:        # if BASE is less than 100, use stylistic zeros before the file number i.e: '001.png'
 		if volatile_base > 1:
@@ -50,11 +55,11 @@ def zero(position):
 		else:
 			return 2
 	else:
-		return BASE - volitile_base
+		return BASE - volatile_base
 
 # Main loop
 for main in range(0, NUMBER_OF_FILES):
-	global SKIP
+	#global SKIP
 	current = FILES[main]
 	ext = find_extension(current)
 	position = str(main + 1)    # main + 1 because no need for files named 0000
